@@ -3,7 +3,7 @@ header:
   includes:
     - st-oss.yml
 
-machine: stm32mp157c-dk2
+machine: stm32mp15-disco-oss
 
 local_conf_header:
   bugs: |

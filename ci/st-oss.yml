@@ -1,22 +1,17 @@
 header:
   version: 9
 
-distro: poky
+distro: nodistro
 
 defaults:
   repos:
     refspec: dunfell
 
 repos:
-  layers/oe-core:
-    url: https://github.com/openembedded/openembedded-core.git
+  layers/poky:
+    url: https://git.yoctoproject.org/git/poky
     layers:
       meta:
-  layers/oe-core/bitbake:
-    url: https://git.openembedded.org/bitbake
-    refspec: yocto-3.1.13
-    layers:
-      ../meta:
   layers/meta-open-embbedded:
     url: git://github.com/openembedded/meta-openembedded.git
     layers:
@@ -25,6 +20,8 @@ repos:
       meta-python:
   layers/meta-st/meta-st-stm32mp-oss:
     url: https://github.com/STMicroelectronics/meta-st-stm32mp-oss
+    layers:
+      .:
 
 env:
   BB_LOGCONFIG: ""
@@ -32,7 +29,7 @@ env:
 
 local_conf_header:
   base: |
-    CONF_VERSION = "2"
+    CONF_VERSION = "1"
     PACKAGE_CLASSES = "package_ipk"
     PACKAGECONFIG:remove:pn-qemu-system-native = "gtk+ sdl"
     EXTRA_IMAGE_FEATURES:append = " debug-tweaks"
