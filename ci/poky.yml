@@ -13,12 +13,6 @@ repos:
     layers:
       meta:
       meta-poky:
-  meta-arm:
-    url: git://git.yoctoproject.org/meta-arm
-    layers:
-      meta-arm:
-      meta-arm-bsp:
-      meta-arm-toolchain:
 
 env:
   BB_LOGCONFIG: ""
