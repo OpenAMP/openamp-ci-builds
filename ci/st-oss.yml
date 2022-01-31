@@ -5,35 +5,26 @@ distro: poky
 
 defaults:
   repos:
-    refspec: master
+    refspec: dunfell
 
 repos:
-  meta-trustedsubstrate:
-    path: meta-trustedsubstrate
-  poky:
-    url: https://git.yoctoproject.org/git/poky
+  layers/oe-core:
+    url: https://github.com/openembedded/openembedded-core.git
     layers:
       meta:
-      meta-poky:
-    patches:
-      p1:
-        repo : poky
-        path : ../patches/0001-wic-add-UEFI-kernel-as-UEFI-stub.patch
-      p2:
-        repo : poky
-        path : ../patches/0002-wic-bootimg-efi-implement-include-path.patch
-  meta-arm:
-    url: git://git.yoctoproject.org/meta-arm
+  layers/oe-core/bitbake:
+    url: https://git.openembedded.org/bitbake
+    refspec: yocto-3.1.13
     layers:
-      meta-arm:
-      meta-arm-bsp:
-      meta-arm-toolchain:
-  meta-secure-core:
-    url: https://github.com/jiazhang0/meta-secure-core
+      ../meta:
+  layers/meta-open-embbedded:
+    url: git://github.com/openembedded/meta-openembedded.git
     layers:
-      meta:
-      meta-efi-secure-boot:
-      meta-signing-key:
+      meta-oe:
+      meta-perl:
+      meta-python:
+  layers/meta-st/meta-st-stm32mp-oss:
+    url: https://github.com/STMicroelectronics/meta-st-stm32mp-oss
 
 env:
   BB_LOGCONFIG: ""
