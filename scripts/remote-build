@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set_defaults() {
+    : ${BUILD_CONFIG:=default}
+    : ${REMOTE_NAME:=$AWS_NAME}
+    : ${REMOTE_DIR:=builds/$BUILD_CONFIG}
+}
+
+local_config() {
+    # allow user to override default settings
+    for d in ~/.prjinfo .prjinfo .prjinfo/local ; do
+        if [ -r $d/setenv ]; then
+            . $d/setenv
+        fi
+    done
+
+    set_defaults
+}
+
+push_this_git() {
+    ssh $REMOTE_NAME bash -c "\"mkdir -p $REMOTE_DIR; cd $REMOTE_DIR; git init\""
+    git push -f $REMOTE_NAME:$REMOTE_DIR/.git HEAD:pending
+    ssh $REMOTE_NAME bash -c "\"cd $REMOTE_DIR; git reset --hard pending\""
+}
+
+do_build() {
+    cd $(dirname $0)/..
+    case $1 in
+    *.yml)
+        ~/.local/bin/kas build $1
+        ;;
+    *.sh)
+        ./$1
+    esac
+}
+
+if [ "$1" == on-remote ]; then
+    shift
+    do_build "$@"
+else
+    local_config
+    push_this_git
+    ssh -t $REMOTE_NAME $REMOTE_DIR/scripts/remote-build on-remote "$@"
+fi
