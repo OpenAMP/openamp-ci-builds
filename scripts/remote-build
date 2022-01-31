@@ -3,7 +3,7 @@
 set_defaults() {
     : ${BUILD_CONFIG:=default}
     : ${REMOTE_NAME:=$AWS_NAME}
-    : ${REMOTE_DIR:=builds/$BUILD_CONFIG}
+    : ${REMOTE_DIR:=ci-builds/$BUILD_CONFIG}
 }
 
 local_config() {
@@ -38,6 +38,13 @@ if [ "$1" == on-remote ]; then
     shift
     do_build "$@"
 else
+    case $1 in
+    *.yml)
+        TMP=${1#ci/}
+        TMP=${TMP%.yml}
+        BUILD_CONFIG=$TMP
+        ;;
+    esac
     local_config
     push_this_git
     ssh -t $REMOTE_NAME $REMOTE_DIR/scripts/remote-build on-remote "$@"
