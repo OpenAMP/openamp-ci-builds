@@ -12,7 +12,8 @@ fi
 # Yocto/OE requirements
 sudo apt-get install -y gawk wget git-core diffstat unzip texinfo \
   build-essential chrpath socat cpio python python3 python3-pip \
-  python3-pexpect xz-utils debianutils iputils-ping curl git zstd
+  python3-pexpect xz-utils debianutils iputils-ping curl git \
+  zstd libssl-dev
 
 # we need kas
 if ! which kas; then
