@@ -34,6 +34,10 @@ local_conf_header:
     PACKAGECONFIG:remove:pn-qemu-system-native = "gtk+ sdl"
     EXTRA_IMAGE_FEATURES:append = " debug-tweaks"
     INHERIT += "rm_work"
+    USER_CLASSES ?= "buildstats"
+    IMAGE_FSTYPES:append = " cpio.gz"
+    IMAGE_FSTYPES:remove = "jffs2"
+    IMAGE_INSTALL:append = " rsync"
   noptest: |
     DISTRO_FEATURES:remove = "ptest"
   sstate_mirror: |
