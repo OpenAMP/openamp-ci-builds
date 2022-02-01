@@ -13,7 +13,7 @@ fi
 sudo apt-get install -y gawk wget git-core diffstat unzip texinfo \
   build-essential chrpath socat cpio python python3 python3-pip \
   python3-pexpect xz-utils debianutils iputils-ping curl git \
-  zstd libssl-dev
+  zstd libssl-dev lz4
 
 # we need kas
 if ! which kas; then

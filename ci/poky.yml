@@ -8,7 +8,7 @@ defaults:
     refspec: master
 
 repos:
-  poky:
+  layers/poky:
     url: https://git.yoctoproject.org/git/poky
     layers:
       meta:
