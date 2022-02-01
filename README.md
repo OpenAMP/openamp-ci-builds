@@ -19,6 +19,7 @@ Start with a fresh VM or container
 $ git clone https://github.com/wmamills/openamp-ci-builds.git
 $ cd openamp-ci-builds
 $ script/build-host-setup.sh
+$ if ! which kas; then PATH="~/.local/bin:$PATH"; fi
 ```
 
 ## for a quick (2 min) test use
