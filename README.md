@@ -16,28 +16,28 @@ Start with a fresh VM or container
 
 ## setup
 ```
-$ git clone https://github.com/wmamills/openamp-ci-builds.git
-$ cd openamp-ci-builds
-$ scripts/build-host-setup.sh
-$ if ! which kas; then PATH="~/.local/bin:$PATH"; fi
+git clone https://github.com/wmamills/openamp-ci-builds.git
+cd openamp-ci-builds
+scripts/build-host-setup.sh
+if ! which kas; then PATH="~/.local/bin:$PATH"; fi
 ```
 
 ## for a quick (2 min) test use
 ```
-$ kas build ci/qemuarm64-test.yml
+kas build ci/qemuarm64-test.yml
 ```
 
 ## full generic poky build  
 will take ~ an hour  
 ```
-$ kas build ci/qemuarm64-test.yml
+kas build ci/qemuarm64-test.yml
 ```
 
 ## full build for STMP1 
 uses meta-st-stm32mp-oss to build upstream kernel, u-boot, etc
 (will take a couple of hours)
 ```
-$ kas build ci/stm32mp157c-dk2.yml
+kas build ci/stm32mp157c-dk2.yml
 ```
 
 ## next steps
