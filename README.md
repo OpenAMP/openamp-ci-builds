@@ -15,7 +15,7 @@ Start with a fresh VM or container
 * I will be testing on aarch64 hosts but trouble is expected on vendor builds
 
 ## setup
-> $ git clone git@github.com:wmamills/openamp-ci-builds.git  
+> $ git clone https://github.com/wmamills/openamp-ci-builds.git  
 > $ cd openamp-ci-builds  
 > $ script/build-host-setup.sh  
 
