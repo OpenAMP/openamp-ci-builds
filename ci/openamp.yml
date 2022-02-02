@@ -33,6 +33,8 @@ local_conf_header:
     IMAGE_FSTYPES:append = " cpio.gz"
     IMAGE_FSTYPES:remove = "jffs2"
     IMAGE_INSTALL:append = " rsync"
+  openamp: |
+    DISTRO_FEATURES:append = " openamp"
   noptest: |
     DISTRO_FEATURES:remove = "ptest"
   sstate_mirror: |
