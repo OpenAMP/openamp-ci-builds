@@ -46,6 +46,7 @@ else
         ;;
     esac
     local_config
+    echo "Building on $REMOTE_NAME"
     push_this_git
     ssh -t $REMOTE_NAME $REMOTE_DIR/scripts/remote-build on-remote "$@"
 fi
