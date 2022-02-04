@@ -1,5 +1,5 @@
 # source the file to get set project specific env vars
 
-AWS_NAME=aws-oamp01
-AWS_INSTANCE_TYPE=m6i.4xlarge
-OS_DISK_SIZE=1024
+: ${AWS_NAME:=aws-oamp01}
+: ${AWS_INSTANCE_TYPE:=m6i.4xlarge}
+: ${OS_DISK_SIZE:=1024}
