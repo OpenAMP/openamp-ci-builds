@@ -19,7 +19,7 @@ repos:
       meta-perl:
       meta-python:
   layers/meta-st/meta-st-stm32mp-oss:
-    url: https://github.com/STMicroelectronics/meta-st-stm32mp-oss
+    url: https://github.com/arnopo/meta-st-stm32mp-oss.git
     layers:
       .:
 
@@ -30,7 +30,7 @@ env:
 local_conf_header:
   base: |
     CONF_VERSION = "1"
-    PACKAGE_CLASSES = "package_ipk"
+    PACKAGE_CLASSES = "package_deb package_ipk"
     PACKAGECONFIG:remove:pn-qemu-system-native = "gtk+ sdl"
     EXTRA_IMAGE_FEATURES:append = " debug-tweaks"
     INHERIT += "rm_work"
@@ -40,9 +40,5 @@ local_conf_header:
     IMAGE_INSTALL:append = " rsync"
   noptest: |
     DISTRO_FEATURES:remove = "ptest"
-  sstate_mirror: |
-    BB_HASHSERVE_UPSTREAM = "typhoon.yocto.io:8687"
-    BB_HASHSERVE = "auto"
-    BB_SIGNATURE_HANDLER = "OEEquivHash"
 
 machine: unset
