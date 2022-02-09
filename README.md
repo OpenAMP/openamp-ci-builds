@@ -67,6 +67,13 @@ kas build ci/genericarm64.yml
 kas build ci/genericarmv7.yml
 ```
 
+## Xilinx vendor build
+The below script build the Xilinx QEMU machine with all Xilinx layers and
+using the Xilinx versions of Linux, openamp libaries, U-boot etc
+```
+ci/xilinx-vendor.sh
+```
+
 ## next steps
 * going forward I will publish sstate for these builds and then users with
 a decent internet connection will be able to reproduce them in a few min
