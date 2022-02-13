@@ -49,15 +49,28 @@ do_build() {
     esac
 }
 
+echo "running on $(hostname) with args=$@"
 if [ "$1" == on-remote ]; then
     shift
     do_build "$@"
 else
     case $1 in
-    *.yml)
+    ci/*)
         TMP=${1#ci/}
         TMP=${TMP%.yml}
+        TMP=${TMP%.sh}
         BUILD_CONFIG=$TMP
+    esac
+    case $1 in
+    *.yml)
+        IS_YAML=true
+        ;;
+    *.sh)
+        IS_YAML=false
+        ;;
+    *)
+        echo "Expected either *.yml or *.sh and got $1"
+        exit 2
         ;;
     esac
     local_config
