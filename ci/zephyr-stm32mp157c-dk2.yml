@@ -33,7 +33,7 @@ local_conf_header:
     PACKAGE_CLASSES = "package_ipk"
     PACKAGECONFIG:remove:pn-qemu-system-native = "gtk+ sdl"
     EXTRA_IMAGE_FEATURES:append = " debug-tweaks"
-    INHERIT += "rm_work"
+    # INHERIT += "rm_work"
     USER_CLASSES ?= "buildstats"
     IMAGE_FSTYPES:append = " cpio.gz"
     IMAGE_FSTYPES:remove = "jffs2"
