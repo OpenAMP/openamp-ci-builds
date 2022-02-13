@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ x"$1" == x"-d" ]; then
+    set -x
+    shift
+fi
+
+
 set_defaults() {
     : ${BUILD_CONFIG:=default}
     : ${REMOTE_NAME:=$AWS_NAME}
