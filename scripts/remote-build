@@ -32,9 +32,10 @@ local_config() {
 }
 
 push_this_git() {
-    ssh $REMOTE_NAME bash -c "\"mkdir -p $REMOTE_DIR; cd $REMOTE_DIR; git init\""
-    git push -f $REMOTE_NAME:$REMOTE_DIR/.git HEAD:pending
-    ssh $REMOTE_NAME bash -c "\"cd $REMOTE_DIR; git reset --hard pending\""
+    echo "*** pushing $1 to $REMOTE_NAME:$REMOTE_DIR/$1"
+    ssh $REMOTE_NAME bash -c "\"mkdir -p $REMOTE_DIR/$1; cd $REMOTE_DIR/$1; git init\""
+    (cd $1; git push -f $REMOTE_NAME:$REMOTE_DIR/$1/.git HEAD:pending)
+    ssh $REMOTE_NAME bash -c "\"cd $REMOTE_DIR/$1; git reset --hard pending\""
 }
 
 do_build() {
@@ -61,6 +62,6 @@ else
     esac
     local_config
     echo "Building on $REMOTE_NAME"
-    push_this_git
+    push_this_git .
     ssh -t $REMOTE_NAME $REMOTE_DIR/scripts/remote-build on-remote "$@"
 fi
