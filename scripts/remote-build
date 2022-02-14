@@ -38,6 +38,13 @@ push_this_git() {
     ssh $REMOTE_NAME bash -c "\"cd $REMOTE_DIR/$1; git reset --hard pending\""
 }
 
+push_all_git() {
+    for gd in $(find layers -maxdepth 3 -name .git -type d); do
+        d=$(dirname $gd)
+        push_this_git $d
+    done
+}
+
 do_build() {
     cd $(dirname $0)/..
     case $1 in
@@ -49,10 +56,23 @@ do_build() {
     esac
 }
 
+do_checkout() {
+    cd $(dirname $0)/..
+    case $1 in
+    *.yml)
+        echo "*** do checkout $1"
+        ~/.local/bin/kas checkout --force-checkout --update $1
+        ;;
+    esac
+}
+
 echo "running on $(hostname) with args=$@"
 if [ "$1" == on-remote ]; then
     shift
     do_build "$@"
+elif [ "$1" == checkout ]; then
+    shift
+    do_checkout "$@"
 else
     case $1 in
     ci/*)
@@ -76,5 +96,9 @@ else
     local_config
     echo "Building on $REMOTE_NAME"
     push_this_git .
+    if $IS_YAML & false; then
+        ssh -t $REMOTE_NAME $REMOTE_DIR/scripts/remote-build checkout "$@"
+        push_all_git
+    fi
     ssh -t $REMOTE_NAME $REMOTE_DIR/scripts/remote-build on-remote "$@"
 fi
