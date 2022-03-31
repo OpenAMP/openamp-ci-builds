@@ -13,7 +13,7 @@ repos:
     layers:
       meta:
   layers/meta-open-embbedded:
-    url: git://github.com/openembedded/meta-openembedded.git
+    url: https://github.com/openembedded/meta-openembedded.git
     layers:
       meta-oe:
       meta-python:

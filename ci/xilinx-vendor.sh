@@ -57,7 +57,7 @@ mkdir -p $XILINX_YOCTO_ROOT
 cd $XILINX_YOCTO_ROOT
 
 echo "*** getting meta data"
-$REPO init -u git://github.com/Xilinx/yocto-manifests.git -b rel-v2021.2
+$REPO init -u https://github.com/Xilinx/yocto-manifests.git -b rel-v2021.2
 $REPO sync
 source setupsdk
 
