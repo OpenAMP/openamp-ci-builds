@@ -11,6 +11,8 @@ defaults:
 repos:
   layers/poky:
     url: https://git.yoctoproject.org/git/poky
+    # freeze at master of March 31 just to cut down churn
+    refspec: ee5f9d9fdd7d09aa3a86a19d07e3e64851ddc686
     layers:
       meta:
       meta-poky:
