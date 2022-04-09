@@ -1,6 +1,7 @@
 header:
   version: 9
 
+build_system: oe
 distro: zephyr
 
 defaults:
