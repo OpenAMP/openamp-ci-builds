@@ -8,7 +8,7 @@ fi
 
 set_defaults() {
     : ${BUILD_CONFIG:=default}
-    : ${REMOTE_NAME:=$AWS_NAME}
+    : ${REMOTE_NAME:=dummy-remote}
     : ${REMOTE_DIR:=ci-builds/$BUILD_CONFIG}
 }
 
