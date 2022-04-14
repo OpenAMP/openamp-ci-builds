@@ -1,0 +1,11 @@
+header:
+  version: 9
+
+target:
+  - quilt-native
+
+local_conf_header:
+  rm_work: |
+    INHERIT += "rm_work"
+
+
