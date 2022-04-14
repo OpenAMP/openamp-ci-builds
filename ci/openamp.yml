@@ -51,9 +51,5 @@ local_conf_header:
     DISTRO_FEATURES:append = " openamp"
   noptest: |
     DISTRO_FEATURES:remove = "ptest"
-  sstate_mirror: |
-    BB_HASHSERVE_UPSTREAM = "typhoon.yocto.io:8687"
-    BB_HASHSERVE = "auto"
-    BB_SIGNATURE_HANDLER = "OEEquivHash"
 
 machine: unset
