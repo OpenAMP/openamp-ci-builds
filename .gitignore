@@ -1,3 +1,4 @@
 /build*
-/layers
 /output
+/layers/*
+!/layers/meta-openamp-bsp
