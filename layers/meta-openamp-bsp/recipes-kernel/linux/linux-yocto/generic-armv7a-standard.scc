@@ -1,0 +1,5 @@
+define KMACHINE generic-armv7a
+define KTYPE standard
+define KARCH arm
+
+include ktypes/standard/standard.scc
