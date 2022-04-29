@@ -3,7 +3,7 @@ header:
   includes:
     - openamp.yml
 
-machine: qemuarm64
+machine: generic-arm64
 
 local_conf_header:
   bugs: |
