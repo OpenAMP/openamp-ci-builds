@@ -49,7 +49,7 @@ do_build() {
     cd $(dirname $0)/..
     case $1 in
     *.yml)
-        ~/.local/bin/kas build $1
+        ~/.local/bin/kas build --update $1
         ;;
     *.sh)
         ./$1
