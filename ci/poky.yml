@@ -6,11 +6,12 @@ distro: poky
 
 defaults:
   repos:
-    refspec: master
+    refspec: kirkstone
 
 repos:
   layers/poky:
     url: https://git.yoctoproject.org/git/poky
+    refspec: yocto-4.0
     layers:
       meta:
       meta-poky:
