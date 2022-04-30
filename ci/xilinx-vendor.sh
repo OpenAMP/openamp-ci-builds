@@ -130,6 +130,9 @@ if [ -n "$FAKE_IT" ]; then
     exit 0
 fi
 
+echo "*** build bit file to avoid race condition"
+MACHINE=zcu102-zynqmp bitbake virtual/bitstream
+
 echo "*** building image"
 MACHINE=zcu102-zynqmp bitbake openamp-image-minimal
 
