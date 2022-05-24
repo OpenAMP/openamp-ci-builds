@@ -75,8 +75,9 @@ elif [ "$1" == checkout ]; then
     do_checkout "$@"
 else
     case $1 in
-    ci/*)
+    ci/*|for-ref/*)
         TMP=${1#ci/}
+        TMP=${1#for-ref/}
         TMP=${TMP%.yml}
         TMP=${TMP%.sh}
         BUILD_CONFIG=$TMP
