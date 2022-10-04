@@ -58,93 +58,19 @@ mkdir -p $XILINX_YOCTO_ROOT
 cd $XILINX_YOCTO_ROOT
 
 echo "*** getting meta data"
-$REPO init -u https://github.com/Xilinx/yocto-manifests.git -b rel-v2022.1
+$REPO init -u https://github.com/Xilinx/yocto-manifests.git -b refs/tags/xlnx-rel-v2022.1_update3
 $REPO sync
+
+# reset to clean in case we have already patched
+$REPO forall -c git reset --hard
+
+# Apply patch to enable openamp DT nodes and fixup QEMU
+patch -p1 < $PRJ_DIR/files/xlnx_2022_1_update_3_openamp.patch 
+
+# setup OE Build
 source setupsdk
 
 # at this point the PWD will be $XILINX_YOCTO_ROOT/build
-
-# local.conf mods
-echo "*** mod local.conf"
-CONF=$XILINX_YOCTO_ROOT/build/conf/local.conf
-if [ ! -r $CONF.orig ]; then
-    # first run save what we are starting with
-    cp $CONF $CONF.orig
-else
-    # other reset to orig
-    cp $CONF.orig $CONF
-fi
-echo 'IMAGE_INSTALL:append:zynqmp += " kernel-module-zynqmp-r5-remoteproc"' >>$CONF
-echo 'IMAGE_INSTALL:append = " packagegroup-petalinux-openamp"' >> $CONF
-echo 'IMAGE_INSTALL:append = " openssh openssh-sshd openssh-sftp openssh-sftp-server"' >> $CONF
-echo 'EXTRA_IMAGE_FEATURES += " debug-tweaks"' >> $CONF
-
-# configure board specific rootfs tweaks
-echo "YAML_DT_BOARD_FLAGS:zcu102='{BOARD zcu102-rev1.0}'" >> $CONF
-echo "YAML_DT_BOARD_FLAGS:k26='{BOARD zynqmp-sm-k26-reva}'" >> $CONF
-
-echo "*** hack QEMU config"
-# Hack the QEMU config for user mode networking w/ TFTP
-: ${QEMU_TFTP:=$PRJ_DIR/tftp/zcu102}
-: ${QEMU_SSH_PORT:=1114}
-QEMU_DIR=$XILINX_YOCTO_ROOT/sources/meta-xilinx/meta-xilinx-bsp/conf/machine
-QEMU_CONF=$QEMU_DIR/zcu102-zynqmp.conf
-QEMU_NET="QB_NETWORK_DEVICE = \"-net nic -net nic -net nic -net nic,netdev=eth0"
-QEMU_NET="$QEMU_NET -netdev user,id=eth0,hostfwd=tcp:: $QEMU_SSH_PORT-:22,tftp=$QEMU_TFTP\""
-if [ ! -r $QEMU_CONF.orig ]; then
-    # first run save what we are starting with
-    cp $QEMU_CONF $QEMU_CONF.orig
-else
-    # other reset to orig
-    cp $QEMU_CONF.orig $QEMU_CONF
-fi
-echo "$QEMU_NET" >> $QEMU_CONF
-
-echo "*** hack k26 openamp.dtsi"
-# Hack the k26 openamp device tree source overlay
-K26_OA_DTSI=$XILINX_YOCTO_ROOT/sources/meta-som/recipes-bsp/device-tree/files/openamp.dtsi
-if [ ! -r $K26_OA_DTSI.orig ]; then
-    # first run save what we are starting with
-    cp $K26_OA_DTSI $K26_OA_DTSI.orig
-fi
-cp $PRJ_DIR/files/openamp_2022_1_fix.dtsi $K26_OA_DTSI
-
-# get PMU ROM
-# disabled, 2022.1 already does this
-if false; then
-if [ ! -r $DEPLOY_DIR/pmu-rom.elf ]; then
-    echo "*** get PMU ROM"
-    DEPLOY_DIR=$XILINX_YOCTO_ROOT/build/tmp/deploy/images/zcu102-zynqmp
-    mkdir -p $DEPLOY_DIR
-    wget https://www.xilinx.com/bin/public/openDownload?filename=PMU_ROM.tar.gz -O PMU_ROM.tar.gz
-    tar -xvzf PMU_ROM.tar.gz
-    cp -a  PMU_ROM/pmu-rom.elf $DEPLOY_DIR/pmu-rom.elf
-fi
-fi
-
-# modify DT for zcu102
-echo "*** modify DT"
-DTS_ADD1=$PRJ_DIR/files/zcu102-rproc-adder.dtsi
-DTS_BASE_DIR=$XILINX_YOCTO_ROOT/build/workspace/sources/device-tree/device_tree
-DTS_BASE_DIR=$DTS_BASE_DIR/data/kernel_dtsi/2021.2
-DTS_BASE=$DTS_BASE_DIR/zynqmp/zynqmp.dtsi
-# is this the first time through?cd
-if [ ! -r $DTS_BASE.orig ]; then
-    # check it out for dev/hacking
-    echo "****** devtool modify"
-    MACHINE=zcu102-zynqmp devtool modify device-tree
-
-    # keep track of the original
-    # and record the fact that we have already checked out
-    cp $DTS_BASE $DTS_BASE.orig
-fi
-cat $DTS_BASE.orig $DTS_ADD1 >$DTS_BASE
-
-# force rebuild DTB
-echo "****** DT cleanall"
-MACHINE=zcu102-zynqmp bitbake -f -c cleanall device-tree
-echo "****** DT build"
-MACHINE=zcu102-zynqmp bitbake device-tree
 
 # do real build step
 if [ -n "$FAKE_IT" ]; then

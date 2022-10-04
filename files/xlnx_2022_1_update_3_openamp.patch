@@ -1,0 +1,33 @@
+
+diff --git a/sources/meta-openamp/conf/layer.conf b/sources/meta-openamp/conf/layer.conf
+index 892e3ff..9e261f1 100644
+--- a/sources/meta-openamp/conf/layer.conf
++++ b/sources/meta-openamp/conf/layer.conf
+@@ -39,4 +39,4 @@ PREFERRED_VERSION_open-amp  ?= "${@'decoupling' if ( \
+ PNBLACKLIST[open-amp] = "${@ ('This is not the preferred version (%s)' % d.getVar('PV')) if d.getVar('PREFERRED_VERSION_%s' % d.getVar('PN')) and d.getVar('PREFERRED_VERSION_%s' % d.getVar('PN')) != d.getVar('PV') else ''}"
+ 
+ # Set to 1 to add the openamp dts nodes to device-tree recipe
+-ENABLE_OPENAMP_DTSI ?= "0"
++ENABLE_OPENAMP_DTSI ?= "1"
+
+diff --git a/sources/meta-xilinx/meta-xilinx-core/conf/machine/zynqmp-generic.conf b/sources/meta-xilinx/meta-xilinx-core/conf/machine/zynqmp-generic.conf
+index 6bc42364..b6dab3f0 100644
+--- a/sources/meta-xilinx/meta-xilinx-core/conf/machine/zynqmp-generic.conf
++++ b/sources/meta-xilinx/meta-xilinx-core/conf/machine/zynqmp-generic.conf
+@@ -54,7 +54,6 @@ EXTRA_IMAGEDEPENDS += " \
+ 		"
+ 
+ IMAGE_BOOT_FILES += " \
+-		uEnv.txt \
+ 		atf-uboot.ub \
+ 		${@bb.utils.contains('PREFERRED_PROVIDER_virtual/dtb', 'device-tree', 'system.dtb', '', d)} \
+ 		boot.scr \
+@@ -63,7 +62,7 @@ IMAGE_BOOT_FILES += " \
+ # This machine has a QEMU model, runqemu setup:
+ QB_MEM = "-m 4096"
+ QB_OPT_APPEND ?= "-nographic -serial mon:stdio -serial null"
+-QB_NETWORK_DEVICE = "-net nic -net nic -net nic -net nic,netdev=net0,macaddr=@MAC@"
++QB_NETWORK_DEVICE = "-net nic -net nic -net nic -net nic,netdev=eth0 -netdev user,id=eth0,hostfwd=tcp::1114-:22,tftp=$HOME/tftpdir"
+ 
+ # Replicate BootROM like behaviour, having loaded SPL and PMU(ROM+FW)
+ QB_OPT_APPEND:append:qemuboot-xilinx = " \
