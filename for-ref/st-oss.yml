@@ -6,7 +6,7 @@ distro: nodistro
 
 defaults:
   repos:
-    refspec: dunfell
+    refspec: kirkstone
 
 repos:
   layers/poky:
@@ -30,7 +30,7 @@ env:
 
 local_conf_header:
   base: |
-    CONF_VERSION = "1"
+    CONF_VERSION = "2"
     PACKAGE_CLASSES = "package_deb package_ipk"
     PACKAGECONFIG:remove:pn-qemu-system-native = "gtk+ sdl"
     EXTRA_IMAGE_FEATURES:append = " debug-tweaks"
