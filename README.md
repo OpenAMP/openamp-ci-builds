@@ -49,8 +49,6 @@ kas build ci/generic-arm64.yml
 kas build ci/generic-armv7.yml
 ```
 
-Currently, these use a fork of meta-openamp in Bill's account.
-
 ## other builds
 
 This repo has other builds definitions for handy reference.

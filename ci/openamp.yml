@@ -17,7 +17,7 @@ repos:
       meta:
       meta-poky:
   layers/meta-openamp:
-    url: https://github.com/wmamills/meta-openamp.git
+    url: https://github.com/openamp/meta-openamp.git
     refspec: master
     layers:
       .:
