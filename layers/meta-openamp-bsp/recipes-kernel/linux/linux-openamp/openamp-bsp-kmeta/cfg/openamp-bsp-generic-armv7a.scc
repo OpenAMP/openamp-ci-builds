@@ -1,0 +1,4 @@
+define KFEATURE_DESCRIPTION "Extra config for generic-armv7a"
+define KFEATURE_COMPATIBILITY arch
+
+# nothing extra beyond multi_v7_defconfig
