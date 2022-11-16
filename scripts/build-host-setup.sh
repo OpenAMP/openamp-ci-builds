@@ -11,7 +11,7 @@ fi
 
 # Yocto/OE requirements
 sudo apt-get install -y gawk wget git-core diffstat unzip texinfo \
-  build-essential chrpath socat cpio python python3 python3-pip \
+  build-essential chrpath socat cpio python3 python3-pip \
   python3-pexpect xz-utils debianutils iputils-ping curl git \
   zstd libssl-dev lz4
 
