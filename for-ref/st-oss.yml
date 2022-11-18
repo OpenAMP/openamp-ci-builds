@@ -13,7 +13,7 @@ repos:
     url: https://git.yoctoproject.org/git/poky
     layers:
       meta:
-  layers/meta-open-embbedded:
+  layers/meta-openembedded:
     url: https://github.com/openembedded/meta-openembedded.git
     layers:
       meta-oe:

@@ -46,7 +46,7 @@ local_conf_header:
     USER_CLASSES ?= "buildstats"
     IMAGE_FSTYPES:append = " cpio.gz"
     IMAGE_FSTYPES:remove = "jffs2"
-    IMAGE_INSTALL:append = " rsync rpmsg-echo-test rpmsg-mat-mul rpmsg-proxy-app"
+    IMAGE_INSTALL:append = " rsync iproute2 rpmsg-echo-test rpmsg-mat-mul rpmsg-proxy-app"
     PREFERRED_PROVIDER_virtual/kernel = "linux-openamp"
   openamp: |
     DISTRO_FEATURES:append = " openamp"
