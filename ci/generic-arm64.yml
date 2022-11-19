@@ -6,6 +6,9 @@ header:
 machine: generic-arm64
 
 local_conf_header:
+  machine: |
+    # we don't want grub
+    EFI_PROVIDER = ""
   bugs: |
     # Only ping until errors can be resolved
     TEST_SUITES = "ping"
