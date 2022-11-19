@@ -14,4 +14,4 @@ local_conf_header:
     TEST_SUITES = "ping"
 
 target:
-  - openamp-image-minimal
+  - openamp-initramfs-minimal
