@@ -39,10 +39,10 @@ OpenAMP CI builds use generic OS images, one for 64 bit systems and one for
 32 bit systems.  These builds do not build boot firmware and do not build the
 remoteproc firmware.
 
-The arm64 build takes ~45 min to build from scratch with no sstate and no downloads cache.
-The armv7 build takes ~70 min under the same conditions.
+The arm64 build takes ~28 min to build from scratch with no sstate and no downloads cache.
+The armv7 build takes ~56 min under the same conditions.
 
-A complete rebuild from sstate takes <2 min
+A complete rebuild from sstate takes <1 min
 
 ```
 kas build ci/generic-arm64.yml
