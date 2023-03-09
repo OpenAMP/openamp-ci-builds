@@ -17,8 +17,8 @@ repos:
       meta:
       meta-poky:
   layers/meta-openamp:
-    url: https://github.com/wmamills/meta-openamp.git
-    refspec: wip-rpmsg-utils2
+    url: https://github.com/openamp/meta-openamp.git
+    refspec: master
     layers:
       .:
   layers/meta-arm:
