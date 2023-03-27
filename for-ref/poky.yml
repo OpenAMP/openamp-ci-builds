@@ -11,7 +11,6 @@ defaults:
 repos:
   layers/poky:
     url: https://git.yoctoproject.org/git/poky
-    refspec: yocto-4.0
     layers:
       meta:
       meta-poky:
