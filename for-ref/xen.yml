@@ -1,0 +1,29 @@
+header:
+  version: 9
+  includes:
+    - qemuarm64.yml
+
+repos:
+  layers/meta-virtualization:
+    url: http://git.yoctoproject.org/git/meta-virtualization
+    layers:
+      .:
+  layers/meta-openembedded:
+    url: https://github.com/openembedded/meta-openembedded.git
+    layers:
+      meta-oe:
+      meta-filesystems:
+      meta-python:
+      meta-networking:
+
+local_conf_header:
+  xen: |
+    DISTRO_FEATURES += "virtualization xen"
+    QEMU_TARGETS = "i386 aarch64"
+    PACKAGECONFIG:remove:pn-qemu = "sdl"
+    EXTRA_IMAGE_FEATURES:remove = "ssh-server-dropbear"
+  noptest: |
+    DISTRO_FEATURES:remove = "ptest"
+
+target:
+    - xen-image-minimal
