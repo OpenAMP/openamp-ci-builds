@@ -1,5 +1,7 @@
 #!/bin/bash
 
+RELEASE=xlnx-rel-v2022.2
+
 set -e
 if [ x"$1" == x"-d" ]; then set -x; shift; fi
 
@@ -58,14 +60,11 @@ mkdir -p $XILINX_YOCTO_ROOT
 cd $XILINX_YOCTO_ROOT
 
 echo "*** getting meta data"
-$REPO init -u https://github.com/Xilinx/yocto-manifests.git -b refs/tags/xlnx-rel-v2022.1_update3
+$REPO init -u https://github.com/Xilinx/yocto-manifests.git -b refs/tags/$RELEASE
 $REPO sync
 
 # reset to clean in case we have already patched
 $REPO forall -c git reset --hard
-
-# Apply patch to enable openamp DT nodes and fixup QEMU
-patch -p1 < $PRJ_DIR/files/xlnx_2022_1_update_3_openamp.patch 
 
 # setup OE Build
 source setupsdk
@@ -93,8 +92,8 @@ echo "*** build bit file to avoid race condition"
 MACHINE=zcu102-zynqmp bitbake virtual/bitstream
 
 echo "*** building image for zcu102"
-MACHINE=zcu102-zynqmp bitbake openamp-image-minimal
+MACHINE=zcu102-zynqmp bitbake petalinux-image-minimal
 
 # The kv260 BOOT.bin does not have any bit file so no race condition
 echo "*** building image for kv260"
-MACHINE=kv260-starter-kit bitbake openamp-image-minimal
+MACHINE=kv260-starter-kit bitbake petalinux-image-minimal
