@@ -92,8 +92,8 @@ echo "*** build bit file to avoid race condition"
 MACHINE=zcu102-zynqmp bitbake virtual/bitstream
 
 echo "*** building image for zcu102"
-MACHINE=zcu102-zynqmp bitbake petalinux-image-minimal
+MACHINE=zcu102-zynqmp bitbake openamp-image-minimal
 
 # The kv260 BOOT.bin does not have any bit file so no race condition
 echo "*** building image for kv260"
-MACHINE=kv260-starter-kit bitbake petalinux-image-minimal
+MACHINE=kv260-starter-kit bitbake openamp-image-minimal
