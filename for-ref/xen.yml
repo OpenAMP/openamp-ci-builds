@@ -21,7 +21,6 @@ local_conf_header:
     DISTRO_FEATURES += "virtualization xen"
     QEMU_TARGETS = "i386 aarch64"
     PACKAGECONFIG:remove:pn-qemu = "sdl"
-    EXTRA_IMAGE_FEATURES:remove = "ssh-server-dropbear"
   noptest: |
     DISTRO_FEATURES:remove = "ptest"
 
