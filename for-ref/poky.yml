@@ -6,7 +6,7 @@ distro: poky
 
 defaults:
   repos:
-    refspec: kirkstone
+    refspec: master
 
 repos:
   layers/poky:
