@@ -6,13 +6,11 @@ distro: poky
 
 defaults:
   repos:
-    refspec: kirkstone
+    refspec: master
 
 repos:
   layers/poky:
     url: https://git.yoctoproject.org/git/poky
-    # freeze at kirkstone release
-    refspec: yocto-4.0
     layers:
       meta:
       meta-poky:
@@ -23,9 +21,6 @@ repos:
       .:
   layers/meta-arm:
     url:  https://git.yoctoproject.org/meta-arm
-    # no kirkstone branch or tags as of 2022-04-27
-    # commit below was on April 13 on master branch
-    refspec: 3ee7d019898854f776f95ed31f4b7ea8c8a73dfe
     layers:
       meta-arm:
       meta-arm-toolchain:
