@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RELEASE=xlnx-rel-v2022.2
+RELEASE=xlnx-rel-v2023.2
 
 set -e
 if [ x"$1" == x"-d" ]; then set -x; shift; fi
@@ -96,4 +96,4 @@ MACHINE=zcu102-zynqmp bitbake openamp-image-minimal
 
 # The kv260 BOOT.bin does not have any bit file so no race condition
 echo "*** building image for kv260"
-MACHINE=kv260-starter-kit bitbake openamp-image-minimal
+MACHINE=k26-smk-kv bitbake openamp-image-minimal
