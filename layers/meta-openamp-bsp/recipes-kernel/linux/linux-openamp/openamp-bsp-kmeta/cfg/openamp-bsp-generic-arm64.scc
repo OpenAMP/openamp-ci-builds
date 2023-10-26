@@ -2,4 +2,3 @@ define KFEATURE_DESCRIPTION "Extra config for generic-arm64"
 define KFEATURE_COMPATIBILITY arch
 
 kconf non-hardware zynqmp-extras.cfg
-kconf non-hardware preempt-none.cfg
