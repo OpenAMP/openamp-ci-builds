@@ -23,6 +23,9 @@ local_conf_header:
   base: |
     CONF_VERSION = "2"
     PACKAGE_CLASSES = "package_ipk"
+    BB_GENERATE_MIRROR_TARBALLS = "1"
+    BB_GIT_SHALLOW = "1"
+    BB_GIT_SHALLOW_DEPTH = "1"
     PACKAGECONFIG:remove:pn-qemu-system-native = "gtk+ sdl"
     EXTRA_IMAGE_FEATURES:append = " debug-tweaks ssh-server-openssh"
     PACKAGE_INSTALL_EXTRAS = "rsync iproute2 kernel-modules"
