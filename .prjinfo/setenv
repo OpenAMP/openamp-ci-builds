@@ -1,6 +1,0 @@
-# source the file to get set project specific env vars
-
-: ${REMOTE_NAME:=aws-oamp01}
-: ${REMOTE_PROVIDER:=ec2}
-: ${EC2_INSTANCE_TYPE:=m6i.2xlarge}
-: ${OS_DISK_SIZE:=250}
