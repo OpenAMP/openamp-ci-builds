@@ -91,7 +91,12 @@ if [ -n "$FAKE_IT" ]; then
     exit 0
 fi
 
-# this step still seems to be needed in 2021.1
+# this step is needed for release < 2023.1
+# found in 2021.1 and at least 1 earlier release
+#
+# NOTE: This race seems to have been fixed in 2023.1
+# Keeping the workaround for older releases
+#
 # xilinx-bootbin uses bit file from deploy dir but
 # does not depend on bitstream-extraction.do_deploy
 #   MACHINE=zcu102-zynqmp bitbake -g openamp-image-minimal
@@ -102,6 +107,15 @@ fi
 # also since bitbake does gracefull shutdown, the "missing" bit file is normally
 # in the deploy dir after it stops as bitstream-extract.do_deploy has run in the
 # graceful shutdown phase.
+#
+# In 2023.1:
+# The dependencies are still as described above but bootbin has been changed to
+# pull the bit file from RECIPE_SYSROOT instead of DEPLOY.
+#
+# cd meta-xilinx/meta-xilinx-core/recipes-bsp/bootbin
+# git diff xlnx-rel-v2022.2 xlnx-rel-v2023.1 machine-xilinx-zynqmp.inc
+# changed in commit edf1b5f64b77fffeac0d43aaa41f5484382b4e06
+# on 2022-10-25
 echo "*** build bit file to avoid race condition"
 MACHINE=zcu102-zynqmp bitbake virtual/bitstream
 
