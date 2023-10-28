@@ -1,6 +1,8 @@
 #!/bin/bash
 
-RELEASE=xlnx-rel-v2023.2
+# set the default but allow override from the user environment
+: ${RELEASE:=xlnx-rel-v2023.2}
+: ${REL_TYPE:=tag}
 
 set -e
 if [ x"$1" == x"-d" ]; then set -x; shift; fi
@@ -59,8 +61,20 @@ XILINX_YOCTO_ROOT=$BUILDDIR
 mkdir -p $XILINX_YOCTO_ROOT
 cd $XILINX_YOCTO_ROOT
 
+case $REL_TYPE in
+tag)
+    REPO_REF=refs/tags/$RELEASE
+    ;;
+branch)
+    REPO_REF=$RELEASE
+    ;;
+*)
+    echo "Bad REL_TYPE=$REL_TYPE" && false
+    ;;
+esac
+
 echo "*** getting meta data"
-$REPO init -u https://github.com/Xilinx/yocto-manifests.git -b refs/tags/$RELEASE
+$REPO init -u https://github.com/Xilinx/yocto-manifests.git -b $REPO_REF
 $REPO sync
 
 # reset to clean in case we have already patched
