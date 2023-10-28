@@ -4,6 +4,14 @@
 : ${RELEASE:=xlnx-rel-v2023.2}
 : ${REL_TYPE:=tag}
 
+# the following is a grep key, don't change it
+# prjtools: support get-info
+if [ x"$1" == x"--get-info" ]; then
+    echo "BUILD_DIR=build-xilinx-vendor/build"
+    echo "OE_BRANCH=$RELEASE"
+    exit 0
+fi
+
 set -e
 if [ x"$1" == x"-d" ]; then set -x; shift; fi
 
