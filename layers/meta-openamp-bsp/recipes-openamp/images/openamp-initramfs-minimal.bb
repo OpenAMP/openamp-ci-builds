@@ -6,7 +6,7 @@ OpenAMP features."
 
 PACKAGE_INSTALL = "\
 packagegroup-core-boot module-init-tools shadow \
-rpmsg-echo-test rpmsg-mat-mul rpmsg-proxy-app \
+rpmsg-echo-test rpmsg-mat-mul rpmsg-proxy-app rpmsg-utils \
 ${PACKAGE_INSTALL_EXTRAS} \
 "
 PACKAGE_EXCLUDE = "kernel-image-* linux-firmware* grub-*"
