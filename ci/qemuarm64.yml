@@ -1,0 +1,20 @@
+header:
+  version: 9
+  includes:
+    - openamp.yml
+
+machine: qemuarm64
+
+# Use qemuarm64 to test other things in meta-openamp
+# use linux-yocto not linux-openamp
+# build topenamp-image-minimal
+
+local_conf_header:
+  machine: |
+      PREFERRED_PROVIDER_virtual/kernel = "linux-yocto"
+  bugs: |
+    # Only ping until errors can be resolved
+    TEST_SUITES = "ping"
+
+target:
+  - openamp-image-minimal
