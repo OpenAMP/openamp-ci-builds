@@ -11,6 +11,8 @@ defaults:
 repos:
   layers/poky:
     url: https://git.yoctoproject.org/git/poky
+    # Known good master as of 2023-10-05
+    refspec: 2b9044361f2855866eed831f8bdb770f2c7d42dc
     layers:
       meta:
       meta-poky:
@@ -21,6 +23,8 @@ repos:
       .:
   layers/meta-arm:
     url:  https://git.yoctoproject.org/meta-arm
+    # Known good master as of 2023-10-05
+    refspec: 95789365f7c17df91e52b5d72263f2a97e68b549
     layers:
       meta-arm:
       meta-arm-toolchain:
