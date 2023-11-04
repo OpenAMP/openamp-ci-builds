@@ -53,8 +53,8 @@ local_conf_header:
     PREFERRED_PROVIDER_virtual/kernel = "linux-openamp"
     PREFERRED_PROVIDER_libmetal = "libmetal-dev"
     PREFERRED_PROVIDER_open-amp = "open-amp-dev"
-    #SRCREV:pn-rpmsg-echo-test = "${AUTOREV}"
     OPENAMP_SYS_REF_SRCREV = "${AUTOREV}"
+    OPENAMP_SYS_REF_BRANCH = "main"
 
   openamp: |
     DISTRO_FEATURES:append = " openamp"
