@@ -2,6 +2,7 @@ header:
   version: 9
   includes:
     - openamp.yml
+    - meta-openamp-bsp.yml
 
 machine: generic-armv7a
 

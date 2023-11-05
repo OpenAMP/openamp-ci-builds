@@ -1,0 +1,9 @@
+header:
+  version: 9
+
+repos:
+  self:
+    layers:
+      layers/meta-openamp-bsp:
+      
+machine: unset

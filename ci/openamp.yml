@@ -21,9 +21,6 @@ repos:
     refspec: master
     layers:
       .:
-  self:
-    layers:
-      layers/meta-openamp-bsp:
 
 env:
   BB_LOGCONFIG: ""

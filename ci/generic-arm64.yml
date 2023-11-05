@@ -3,6 +3,7 @@ header:
   includes:
     - openamp.yml
     - meta-arm.yml
+    - meta-openamp-bsp.yml
 
 machine: generic-arm64
 
