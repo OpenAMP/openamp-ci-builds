@@ -125,3 +125,54 @@ MACHINE=zcu102-zynqmp bitbake openamp-image-minimal
 # The kv260 BOOT.bin does not have any bit file so no race condition
 echo "*** building image for kv260"
 MACHINE=k26-smk-kv bitbake openamp-image-minimal
+
+# There are a lot of variations of the file systems that we really don't need
+# This loses no real value and decreases the deploy/image dir
+# before w/  sparse files   1.3 GB
+# before w/o sparse files   3.7 GB
+# after                     401 MB
+trim_deploy() {
+    SAVE_PWD=$PWD
+    for i in ./deploy/images/*; do
+        if ! test -d $i; then continue; fi
+        echo "Triming $i"
+        cd $i
+
+        # make sure we have a .wic.xz for each wic
+        # zcu102 only builds a .wic.qemu-sd
+        # kria builds .wic .wic.qemu-sd and wic.xz
+        for f in *.wic*; do
+            #echo "f=$f"
+            base=${f%.wic*}
+            if [ ! -e $base.wic.xz ]; then
+                if [ -h $f ]; then
+                    f_link=$(readlink $f)
+                    f_link_base=${f_link%.wic*}
+                    echo "ln -s $f_link_base.wic.xz $base.wic.xz"
+                    ln -s $f_link_base.wic.xz $base.wic.xz
+                elif [ -f $f ]; then
+                    echo "xz -zc $f >$base.wic.xz"
+                    xz -zc $f >$base.wic.xz
+                fi
+            fi
+        done
+
+        # we have .wic.xz .cpio.gz .tar.gz
+        # get rid of the redundant or trivial transforms
+        # (tar to cpio is also pretty trivial but cpio is very useful so keep)
+        FILE_LIST=$(shopt -s nullglob; echo *.wic.qemu-sd *.wic *.ext4 *.jffs2 *.cpio *.cpio.gz.u-boot)
+        if [ -n "$FILE_LIST" ]; then
+            echo rm -rf $FILE_LIST
+            rm -rf $FILE_LIST
+        fi
+
+        cd qemu-hw-devicetrees
+        echo "Deleting " \
+            "$(find . -name "board-versal-*" | wc | awk -e '{ print $1 }' ) " \
+            "qemu-hw-devicetree Files"
+        find . -name "board-versal-*" | xargs rm -rf
+        cd $SAVE_PWD
+    done
+}
+
+(cd tmp; trim_deploy)
