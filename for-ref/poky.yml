@@ -6,7 +6,7 @@ distro: poky
 
 defaults:
   repos:
-    refspec: master
+    refspec: nanbield
 
 repos:
   layers/poky:

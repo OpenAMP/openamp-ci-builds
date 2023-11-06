@@ -4,8 +4,9 @@ header:
 repos:
   layers/meta-arm:
     url:  https://git.yoctoproject.org/meta-arm
-    # Known good master as of 2023-10-05
-    refspec: 95789365f7c17df91e52b5d72263f2a97e68b549
+    # master as of 2023-11-04
+    # there is no nanbield branch
+    refspec: 5a7db0ae6645fbe0b32ac20bd818528e3836ff73
     layers:
       meta-arm:
       meta-arm-toolchain:

@@ -6,13 +6,14 @@ distro: poky
 
 defaults:
   repos:
-    refspec: master
+    refspec: nanbield
 
 repos:
   layers/poky:
     url: https://git.yoctoproject.org/git/poky
-    # Known good master as of 2023-10-05
-    refspec: 2b9044361f2855866eed831f8bdb770f2c7d42dc
+    # nanbield as of 2023-11-04
+    # no release tag yet
+    refspec: 96290c8b1cbc7d83e06d31733101442a1a787915
     layers:
       meta:
       meta-poky:
