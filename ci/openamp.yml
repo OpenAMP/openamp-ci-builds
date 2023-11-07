@@ -19,7 +19,7 @@ repos:
       meta-poky:
   layers/meta-openamp:
     url: https://github.com/openamp/meta-openamp.git
-    refspec: master
+    refspec: v2023.10.0
     layers:
       .:
 
