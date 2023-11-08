@@ -92,7 +92,13 @@ $REPO forall -c git reset --hard
 source setupsdk
 
 # at this point the PWD will be $XILINX_YOCTO_ROOT/build
-echo 'IMAGE_INSTALL:append = " packagegroup-petalinux-openamp " ' >>conf/local.conf
+echo 'IMAGE_INSTALL:append = " \
+    packagegroup-petalinux-openamp \
+    kernel-module-zynqmp-r5-remoteproc \
+    kernel-module-rpmsg-ctrl \
+    kernel-module-rpmsg-ns \
+    kernel-module-virtio-rpmsg-bus \
+" ' >>conf/local.conf
 
 # do real build step
 if [ -n "$FAKE_IT" ]; then
