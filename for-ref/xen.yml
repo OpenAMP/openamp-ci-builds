@@ -3,24 +3,23 @@ header:
   includes:
     - qemuarm64.yml
 
-# Note: as of 2023-11-05 master was not working
-# Below are the commits that worked on 2023-10-29
-# All are from master on that date
+# Note: as of 2023-11-13 master is working again
+# Below are the commits from master on that date
 repos:
   layers/poky:
     # refspec: master
-    refspec: 631d19ed6c1935dad19f999a2acbedd272c4b24f
+    refspec: 85f84b4090f3fc84b377d37a18af7e4cb1b78f69
 
   layers/meta-virtualization:
     url: http://git.yoctoproject.org/git/meta-virtualization
     # refspec: master
-    refspec: d258c3d499a35a3ad83686f8cab8d0757ad94b9e
+    refspec: d744f8c4f4daadcc864be06025e6eead25322d11
     layers:
       .:
   layers/meta-openembedded:
     url: https://github.com/openembedded/meta-openembedded.git
     # refspec: master
-    refspec: 22889b13f330e4753c5f72440abcfe42830f2f64
+    refspec: 0a0ea87b8dda01a2887a525cef78eb6c3f4c2c32
     layers:
       meta-oe:
       meta-filesystems:
