@@ -3,6 +3,9 @@ header:
   includes:
     - qemuarm64.yml
 
+# This is made to match this page:
+# https://wiki.xenproject.org/wiki/Xen_on_ARM_and_Yocto
+
 # Note: as of 2023-11-13 master is working again
 # Below are the commits from master on that date
 repos:
@@ -30,6 +33,7 @@ local_conf_header:
   xen: |
     DISTRO_FEATURES += "virtualization xen"
     QEMU_TARGETS = "i386 aarch64"
+    PACKAGECONFIG:append:pn-qemu = " virtfs xen fdt"
     PACKAGECONFIG:remove:pn-qemu = "sdl"
   noptest: |
     DISTRO_FEATURES:remove = "ptest"
