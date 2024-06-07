@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # set the default but allow override from the user environment
-: ${RELEASE:=xlnx-rel-v2023.2}
+: ${RELEASE:=xlnx-rel-v2024.1}
 : ${REL_TYPE:=tag}
 
 # the following is a grep key, don't change it
@@ -140,6 +140,14 @@ MACHINE=zcu102-zynqmp bitbake openamp-image-minimal
 # The kv260 BOOT.bin does not have any bit file so no race condition
 echo "*** building image for kv260"
 MACHINE=k26-smk-kv bitbake openamp-image-minimal
+
+# In 2024.1, building an image does not build the boot.bin file even though it
+# builds all the components (fsbl, tfa, u-boot)
+# I tested with petalinux-image-minimal and this statement remains true.
+# (zcu102 does not have this issue, probably because boot.bin goes into the image)
+#
+# Therefore, do an explicit build of xilinx-bootbin
+MACHINE=k26-smk-kv bitbake xilinx-bootbin
 
 # There are a lot of variations of the file systems that we really don't need
 # This loses no real value and decreases the deploy/image dir
