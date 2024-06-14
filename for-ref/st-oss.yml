@@ -6,7 +6,7 @@ distro: nodistro
 
 defaults:
   repos:
-    refspec: mickledore
+    refspec: nanbield
 
 repos:
   layers/poky:
