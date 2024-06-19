@@ -1,4 +1,11 @@
-define KFEATURE_DESCRIPTION "Extra config for generic-arm64"
+# This is for generic-arm64 from meta-arm < scarthgap 5.0
+# >= scarthgap is genericarm64 from poky's meta-yocto-bsp
+
+define KFEATURE_DESCRIPTION "Extra config for generic{,-}arm64"
 define KFEATURE_COMPATIBILITY arch
 
-kconf non-hardware zynqmp-extras.cfg
+# if we start from defconfig we need this one
+kconf non-hardware zynqmp-still-needed-def.cfg
+
+# if we start from linux-yocto genericarm64 config, we need this one
+kconf non-hardware zynqmp-still-needed-yp.cfg
