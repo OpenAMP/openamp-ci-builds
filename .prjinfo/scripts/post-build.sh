@@ -52,5 +52,6 @@ for m in $M ${M/-/_}; do
     done
 done
 echo $LINK >$D/info.txt
+ln -sf ../make-targets-helper-oe-build $D/make-targets-helper
 make-image-targets $D
 echo "Deploy done $L ($LINK) to $D"
