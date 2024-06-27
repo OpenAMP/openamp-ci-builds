@@ -1,0 +1,17 @@
+# OpenAMP
+
+prefix=stmp1/ci-generic-armv7a-latest/
+prefix=stmp1/k-openamp-v6.6-latest/
+
+kernel_name=zImage
+dtb_name=stm32mp157c-dk2.dtb
+ramdisk_name=initrd.cpio.gz
+
+uenvcmd=\
+tftpboot $kernel_addr_r  ${prefix}${kernel_name}; \
+tftpboot $fdt_addr_r     ${prefix}${dtb_name}; \
+\
+# this must be last so filesize is still set below \
+tftpboot $ramdisk_addr_r ${prefix}${ramdisk_name}; \
+\
+bootz $kernel_addr_r $ramdisk_addr_r:$filesize $fdt_addr_r
