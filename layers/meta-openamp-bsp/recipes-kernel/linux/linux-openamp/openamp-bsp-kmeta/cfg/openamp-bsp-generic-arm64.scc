@@ -9,3 +9,6 @@ kconf non-hardware zynqmp-still-needed-def.cfg
 
 # if we start from linux-yocto genericarm64 config, we need this one
 kconf non-hardware zynqmp-still-needed-yp.cfg
+
+# in either case, we need this one
+kconf non-hardware zynqmp-still-needed-com.cfg
