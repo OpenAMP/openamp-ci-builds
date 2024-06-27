@@ -6,7 +6,7 @@ distro: nodistro
 
 defaults:
   repos:
-    refspec: nanbield
+    refspec: scarthgap
 
 repos:
   layers/poky:
