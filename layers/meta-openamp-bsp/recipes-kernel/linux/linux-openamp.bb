@@ -19,13 +19,14 @@ PV = "${LINUX_VERSION}+git${SRCPV}"
 
 # Override COMPATIBLE_MACHINE to include your machine in a copy of this recipe
 # file. Leaving it empty here ensures an early explicit build failure.
-COMPATIBLE_MACHINE = "generic-arm64|generic-armv7a|qemu-arm64|qemu-arm32"
+COMPATIBLE_MACHINE = "genericarm64|generic-arm64|generic-armv7a|qemu-arm64|qemu-arm32"
 
 KERNEL_DANGLING_FEATURES_WARN_ONLY = "1"
 KERNEL_VERSION_SANITY_SKIP="1"
 
 KERNEL_FEATURES:qemuarm64:append = "cfg/openamp-bsp-generic-arm64.scc"
 KERNEL_FEATURES:generic-arm64:append = "cfg/openamp-bsp-generic-arm64.scc"
+KERNEL_FEATURES:genericarm64:append = "cfg/openamp-bsp-generic-arm64.scc"
 KERNEL_FEATURES:qemuarm:append = "cfg/openamp-bsp-generic-armv7a.scc"
 KERNEL_FEATURES:generic-armv7a:append = "cfg/openamp-bsp-generic-armv7a.scc"
 
