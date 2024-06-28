@@ -11,8 +11,6 @@ defaults:
 repos:
   layers/poky:
     url: https://git.yoctoproject.org/git/poky
-    # Known good master as of 2023-10-05
-    # refspec: 2b9044361f2855866eed831f8bdb770f2c7d42dc
     refspec: yocto-5.0.1
     layers:
       meta:
@@ -20,7 +18,8 @@ repos:
       meta-yocto-bsp:
   layers/meta-openamp:
     url: https://github.com/openamp/meta-openamp.git
-    refspec: master
+    #refspec: master
+    refspec: v2024.05.0
     layers:
       .:
 
