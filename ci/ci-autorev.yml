@@ -1,0 +1,9 @@
+header:
+  version: 9
+
+local_conf_header:
+  autorev: |
+    PREFERRED_PROVIDER_libmetal = "libmetal-dev"
+    PREFERRED_PROVIDER_open-amp = "open-amp-dev"
+    OPENAMP_SYS_REF_SRCREV = "${AUTOREV}"
+    OPENAMP_SYS_REF_BRANCH = "main"
