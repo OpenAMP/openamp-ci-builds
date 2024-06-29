@@ -2,10 +2,9 @@ header:
   version: 9
   includes:
     - openamp.yml
-    - meta-arm.yml
     - meta-openamp-bsp.yml
 
-machine: generic-arm64
+machine: genericarm64
 
 local_conf_header:
   machine: |
