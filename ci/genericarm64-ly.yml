@@ -1,15 +1,14 @@
+# genericarm64 w/ linux yocto 
+# no autorev by default
+# no meta-openamp-bsp
+# build openamp-image-minimal
+
 header:
   version: 9
   includes:
     - openamp.yml
 
-machine: qemuarm64
-
-# Use qemuarm64 to test other things in meta-openamp
-# use linux-yocto not linux-openamp
-# build openamp-image-minimal
-# don't autorev the libraries and examples
-# don't include the meta-openamp-bsp layer
+machine: genericarm64
 
 local_conf_header:
   machine: |

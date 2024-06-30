@@ -36,12 +36,14 @@ local_conf_header:
     BB_GIT_SHALLOW_DEPTH = "1"
     PACKAGE_CLASSES = "package_ipk"
     PACKAGECONFIG:remove:pn-qemu-system-native = "gtk+ sdl"
-    EXTRA_IMAGE_FEATURES:append = " debug-tweaks ssh-server-dropbear"
     USER_CLASSES ?= "buildstats"
     IMAGE_FSTYPES:append = " cpio.gz"
     IMAGE_FSTYPES:remove = "jffs2"
+  extra-packages: |
     PACKAGE_INSTALL_EXTRAS = "rsync iproute2 dropbear kernel-modules"
     IMAGE_INSTALL:append = " ${PACKAGE_INSTALL_EXTRAS} "
+    EXTRA_IMAGE_FEATURES:append = " debug-tweaks ssh-server-dropbear"
+  kernel-selection:
     PREFERRED_PROVIDER_virtual/kernel = "linux-openamp"
 
   openamp: |
