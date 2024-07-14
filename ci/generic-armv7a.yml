@@ -2,7 +2,6 @@ header:
   version: 9
   includes:
     - openamp.yml
-    - ci-autorev.yml
     - meta-openamp-bsp.yml
 
 machine: generic-armv7a
