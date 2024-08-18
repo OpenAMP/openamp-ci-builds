@@ -1,0 +1,108 @@
+# Initial workflow for OE Builds
+
+name: build
+
+# Controls when the action will run.
+on:
+  # push to any branch named wip-test-*
+  push:
+    branches:
+      - 'wip-test-*'
+
+  # Allow workflow to be manually run from the Actions tab
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Which target'
+        required: true
+        default: 'genericarm64'
+        type: choice
+        options:
+          - 'ci/genericarm64.yml'
+          - 'ci/genericarm64-ly.yml'
+          - 'ci/generic-armv7a.yml'
+          - 'ci/qemuarm64.yml'
+          - 'for-ref/stm32mp157c-dk2.yml'
+          - 'for-ref/xilinx-vendor.sh'
+      quick_test:
+        description: 'Do only a quick test build'
+        type: boolean
+        default: off
+
+jobs:
+  # This workflow contains a single job called "build"
+  build-x86:
+    # The type of runner that the job will run on
+    runs-on:
+        labels: big-job-x86-ubuntu-22.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Build Host
+        run: |
+          ./scripts/build-host-setup.sh
+
+      - name: Info
+        run: |
+            echo "path:       $PATH"
+            echo "target:     ${{ inputs.target }}"
+            echo "quick_test: ${{ inputs.quick_test }}"
+
+      - name: Do build
+        run: |
+            TARGET="${{ inputs.target }}"
+
+            # if no target specified (ex. push to wip-test-*), find one
+            if [ -z "$TARGET" ]; then
+              for t in ci/ci-job.sh ci/ci-job.yml ci/genericarm64.yml; do
+                if [ -r "$t" ]; then
+                  TARGET="$t"
+                  break
+                fi
+              done
+            fi
+
+            # if this a "quick test"?
+            if [ x"${{ inputs.quick_test }}" == x"true" ]; then
+              QUICK_TEST_ARG=":mixins/quick-test.yml"
+            else
+              QUICK_TEST_ARG=""
+            fi
+
+            # now handle kas vs shell script
+            case $TARGET in
+            *.yml)
+                kas build ${TARGET}${QUICK_TEST_ARG}
+                ;;
+            *.sh)
+                ./$TARGET
+                ;;
+            *)
+                echo "Unknown target type"
+                exit 2
+                ;;
+            esac
+
+      - name: show file stats
+        run:  |
+              du -sh build/sstate-cache/      || true
+              du -sh build/downloads/         || true
+              du -sh build/tmp/deploy/images/ || true
+              du -sh build/tmp/deploy/ipk     || true
+              cat build/tmp/buildstats/20*/build_stats || true
+
+      - name: Archive Images
+        uses: actions/upload-artifact@v4
+        with:
+          name: images
+          path: |
+            build/tmp/deploy/images
+
+      - name: Archive Packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: packages
+          path: |
+            build/tmp/deploy/ipk

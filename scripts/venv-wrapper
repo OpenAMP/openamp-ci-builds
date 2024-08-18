@@ -1,0 +1,111 @@
+#!/bin/bash
+
+VENV_BASE=~/opt/venv
+BIN_DIR=~/.local/bin
+
+# Allow override of above settings
+if [ -r ~/.prjinfo/venv-wrapper.conf ]; then
+    . ~/.prjinfo/venv-wrapper.conf
+fi
+
+ME=$0
+MY_NAME=$(basename $ME)
+ME_FULL=$(readlink -f $ME)
+
+do_wrapper_cmd() {
+    SUB_CMD=$1
+    MY_NAME=$2
+    shift 2
+
+    case $SUB_CMD in
+    "install"|"create"|"purge"|"run")
+        do_$SUB_CMD "$@"
+        ;;
+    *)
+        echo "Unknown command $SUB_CMD"
+        echo "usage: venv-wrapper install|create|purge|run <name> [<args>]"
+        ;;
+    esac
+}
+
+# create and install to ~/.local/bin
+do_install() {
+    mkdir -p $BIN_DIR
+
+    case $MY_NAME in
+    "self"|"self-link")
+        ln -fs $ME_FULL $BIN_DIR/venv-wrapper
+        return
+        ;;
+    "self-copy")
+        rm -f $BIN_DIR/venv-wrapper 
+        cp -p $ME_FULL $BIN_DIR/venv-wrapper
+        return
+        ;;
+    esac
+
+    do_create "$@"
+    if [ ! -x $BIN_DIR/venv-wrapper ]; then
+        ln -s $ME_FULL $BIN_DIR/venv-wrapper
+    fi
+
+    if [ -e $BIN_DIR/$MY_NAME ]; then
+        RL=$(readlink $BIN_DIR/$MY_NAME)
+        if [ x"$RL" != x"venv-wrapper" ]; then
+            echo "$BIN_DIR/$MY_NAME already exists and is not a symlink to venv-wrapper"
+            exit 2
+        fi
+    else
+        ln -s venv-wrapper $BIN_DIR/$MY_NAME
+    fi
+}
+
+# create the venv and do pip install of any extra args
+do_create() {
+    mkdir -p $VENV_BASE
+    python3 -m venv $VENV_BASE/$MY_NAME
+    if [ -n "$1" ]; then
+        (do_install_pip "$@")
+    fi
+}
+
+# do the pip install step in a sub-shell
+do_install_pip() {
+    # in a sub-shell so env changed will not persist
+    . $VENV_BASE/$MY_NAME/bin/activate
+    pip3 install "$@"
+}
+
+# create and install to ~/.local/bin
+do_purge() {
+    mkdir -p $BIN_DIR
+
+    # delete the venv
+    if [ -r $VENV_BASE/$MY_NAME/bin/activate ]; then
+        rm -rf $VENV_BASE/$MY_NAME
+    fi
+
+    # delete the symlink
+    if [ -e $BIN_DIR/$MY_NAME ]; then
+        RL=$(readlink $BIN_DIR/$MY_NAME)
+        if [ x"$RL" == x"venv-wrapper" ]; then
+            rm -f $BIN_DIR/$MY_NAME
+        else 
+            echo "$BIN_DIR/$MY_NAME already exists and is not a symlink to venv-wrapper"
+            exit 2
+        fi
+    fi
+
+    hash -r
+}
+
+do_run() {
+    . $VENV_BASE/$MY_NAME/bin/activate
+    $VENV_BASE/$MY_NAME/bin/$MY_NAME "$@"
+}
+
+if [ "$MY_NAME" == "venv-wrapper" ]; then
+    do_wrapper_cmd "$@"
+else
+    do_run "$@"
+fi

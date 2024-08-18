@@ -1,0 +1,44 @@
+# Example CI job for testing PRs
+# This shows multiple PRs at the same time
+# however normally only one would be done per job
+
+header:
+  version: 9
+  # We include the base job here
+  includes:
+    - genericarm64.yml
+
+# override the source of the layers
+# kas will not pull directly from the SHA of the PR commit
+# the repo and branch of the PR can be found from th gh command
+# gh pr status --json "headRefName,headRepository,headRepositoryOwner" #49
+# The info below is from meta-openamp #49
+repos:
+  layers/poky:
+    url: https://git.yoctoproject.org/git/poky
+    refspec: yocto-5.0.1
+  layers/meta-openamp:
+    url: https://github.com/wmamills/meta-openamp.git
+    refspec: wam-update-open-amp-lic-md5
+
+# override the commit of these source repos
+# for libmetal and open-amp BRANCH must be blank
+#   the recipe .inc file will add nobranch=1
+# for openamp-system-reference we explicitly add nobranch=1 here
+# NOTE: any override has higher priority than the base var name
+#   therefore these work even if the base recipe has = and not ?=
+# The commits below are:
+#   libmetal #302
+#   open-amp #605
+#   openamp-system-reference #45
+# (They were valid at the time but may not be when you try this)
+local_conf_header:
+  autorev: |
+    PREFERRED_PROVIDER_libmetal = "libmetal-dev"
+    SRCREV:pn-libmetal-dev = "c58d3721bc070a19e1ec1d145e0be2f979072f05"
+    BRANCH:pn-libmetal-dev = ""
+    PREFERRED_PROVIDER_open-amp = "open-amp-dev"
+    SRCREV:pn-open-amp-dev = "fb7fc82e65f14ee8cb6e340426a35d80fa1f8091"
+    BRANCH:pn-open-amp-dev = ""
+    OPENAMP_SYS_REF_SRCREV = "65b35eabaa5ebe8dd3806e54494c65677c6c19e2"
+    OPENAMP_SYS_REF_BRANCH = "none;nobranch=1"
